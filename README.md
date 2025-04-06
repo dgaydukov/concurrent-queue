@@ -30,3 +30,11 @@ Non-blocking concurrency:
 
 ### Single-threaded queue implementation
 Before going into multithreaded environment, it's useful to understand how we can write queue code in single-threaded environment. Generally it's considered a best practice approach, before starting to write any concurrent code, understand how it's supposed to work in single thread environment. So we would add simple queue implementation here.
+There are 2 types of queue interface:
+* [SimpleQueue](/src/main/java/com/java/concurrentqueue/queue/SimpleQueue.java) - default queue interface with only 3 methods:
+  * offer - add new element to the end of queue (add to the tail)
+  * poll - remove and get element from the beginning of the queue (get from head)
+  * size - get current queue size. Don't confuse with `capapcity` - how many elements can be in the queue overall, but size - how many elements currently resides in the queue. So we can have queue with capacity=100, that means we can put max 100 elements into queue. But size can be 10 - which means, currently only 10 elements are in the queue.
+* [SimpleBlockingQueue](/src/main/java/com/java/concurrentqueue/queue/SimpleBlockingQueue.java) - blocking queue interface, it's similar to standard queue, but has different names for adding/reading elements, to signify that those are blocking operations:
+  * put - add new element, similar to `offer`, but offer returns immediately, where put would wait until messages is inserted into queue
+  * take - read element from the beginning of the queue, similar to `poll`, but it would wait if queue is empty.
