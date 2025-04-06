@@ -46,5 +46,6 @@ Usually for compatibility your `BlockingQueue` should extend `Queue` to make sur
 Before going into multithreaded environment, it's useful to understand how we can write queue code in single-threaded environment. Generally it's considered a best practice approach, before starting to write any concurrent code, understand how it's supposed to work in single thread environment. So we would add simple queue implementation here.
 
 ### Blocking queue implementation
+Blocking programming is quite simple. We use locks to get exclusive access for block of code, and only one thread at a time can access it. This simplifies code, because it can be used by all possible scenario from single producer, single consumer all the way to multiple producers multiple consumers (for non-blocking you may have 4 different classes). The code is quite straight-forward. You can take look into [BoundedArrayBlockingQueue](/src/main/java/com/java/queue/blocking/BoundedArrayBlockingQueue.java) to see how it works. Basically we use `ReentrantLock` with 2 conditions for `put/take` methods. Lock ensures that only 1 thread at a time can access any of 3 methods of `put/take/size`. And conditions with `await/signal` keeps threads waiting for element.
 
 ### Non blocking queue implementation
