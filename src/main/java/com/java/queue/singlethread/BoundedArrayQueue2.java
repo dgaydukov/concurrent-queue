@@ -19,7 +19,7 @@ public class BoundedArrayQueue2<T> implements Queue<T> {
 
     @Override
     public boolean offer(T t) {
-        if (tail - head == capacity - 1){
+        if (tail - head == capacity){
             return false;
         }
         int index = (int) (tail++ % capacity);

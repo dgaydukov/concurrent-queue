@@ -2,19 +2,20 @@ package com.java.queue.singlethread;
 
 import com.java.queue.interfaces.Queue;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 public class SingleThreadQueueTest {
-    private Queue<String> queue;
 
-    @BeforeEach
-    public void beforeEach(){
-        queue = new BoundedArrayQueue<>(10);
+    public static Stream<Queue<String>> getQueues() {
+        return Stream.of(new BoundedArrayQueue<>(10), new BoundedArrayQueue2<>(10));
     }
 
-    @Test
-    public void testAddItems(){
+    @ParameterizedTest
+    @MethodSource("getQueues")
+    public void testAddItems(Queue<String> queue){
         Assertions.assertEquals(0, queue.getSize(), "size should be 0");
         Assertions.assertNull(queue.poll(), "queue should be empty");
         for (int i = 0; i < 10; i++){
@@ -27,8 +28,9 @@ public class SingleThreadQueueTest {
         }
     }
 
-    @Test
-    public void testPollItems(){
+    @ParameterizedTest
+    @MethodSource("getQueues")
+    public void testPollItems(Queue<String> queue){
         Assertions.assertNull(queue.poll(), "queue should be empty");
         for (int i = 0; i < 10; i++){
             queue.offer("msg_"+i);
@@ -40,8 +42,9 @@ public class SingleThreadQueueTest {
         Assertions.assertEquals(0, queue.getSize(), "size should be 0");
     }
 
-    @Test
-    public void testAddAndPoll(){
+    @ParameterizedTest
+    @MethodSource("getQueues")
+    public void testAddAndPoll(Queue<String> queue){
         Assertions.assertEquals(0, queue.getSize(), "size should be 0");
         for (int i = 0; i < 10; i++){
             Assertions.assertTrue(queue.offer("msg_"+i), "should add message successfully");
