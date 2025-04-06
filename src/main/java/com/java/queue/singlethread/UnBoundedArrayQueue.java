@@ -1,21 +1,38 @@
-package com.java.concurrentqueue.queue;
+package com.java.queue.singlethread;
 
-public class SimpleQueueImpl<T> implements SimpleQueue<T>{
+import com.java.queue.interfaces.Queue;
+
+import java.util.Arrays;
+
+public class UnBoundedArrayQueue<T> implements Queue<T> {
     private Object[] buffer;
     private int head;
     private int tail;
     private int size;
     private int capacity;
+    private final int growSize;
 
-    public SimpleQueueImpl(int capacity){
-        this.capacity = capacity;
+    public UnBoundedArrayQueue(){
+        this(1000, 500);
+    }
+
+    public UnBoundedArrayQueue(int initialCapacity, int growSize){
+        capacity = initialCapacity;
+        this.growSize = growSize;
         buffer = new Object[capacity];
+    }
+
+    private void grow(){
+        int newCapacity = capacity + growSize;
+        Object[] newBuffer = Arrays.copyOf(buffer, newCapacity);
+        capacity = newCapacity;
+        buffer = newBuffer;
     }
 
     @Override
     public boolean offer(T t) {
         if (size == capacity){
-            return false;
+            grow();
         }
         size++;
         buffer[tail++] = t;

@@ -1,4 +1,4 @@
-package com.java.concurrentqueue;
+package com.java.queue;
 
 public class App {
     public static void main(String[] args) {
