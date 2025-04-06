@@ -54,3 +54,15 @@ We have 3 implementation of `Queue` interface:
 Blocking programming is quite simple. We use locks to get exclusive access for block of code, and only one thread at a time can access it. This simplifies code, because it can be used by all possible scenario from single producer, single consumer all the way to multiple producers multiple consumers (for non-blocking you may have 4 different classes). The code is quite straight-forward. You can take look into [BoundedArrayBlockingQueue](/src/main/java/com/java/queue/blocking/BoundedArrayBlockingQueue.java) to see how it works. Basically we use `ReentrantLock` with 2 conditions for `put/take` methods. Lock ensures that only 1 thread at a time can access any of 3 methods of `put/take/size`. And conditions with `await/signal` keeps threads waiting for element.
 
 ### Non blocking queue implementation
+Generally using blocking is bad for performance, so you should prefer non-blocking concurrency.
+With blocking queue everything is clear. But how non-blocking algo is working. The trick is quite simple, we can use CAS (compare-and-swap) algo to achieve non-blocking concurrency. If 2 threads try to update variable with CAS, only one will succeed. How this helps us. We can write spinning code with `while (true)` where on each iteration we read up-to-date value from main memory and try to update it. To write such code in java, you would need to be able to read from main memory directly and call CAS operations. In java you have 2 options to do it:
+* `Unsafe` - old way, prone to errors, but very efficient. It's widely used by Aeron library and many others.
+* `VarHandle` - new safely way to manipulate raw memory in java9.
+We would use second class to write our code.
+There are a few nice features:
+* CAS is generally much faster than locking
+* for SPSC (single producer, single consumer) - producer and consumer not contend with each other, providing fast performance, way faster than any blocking queue implementation. .
+Downsides:
+* contention exist when multiple producers try to add elements into queue
+* since CAS force retry if value changed, thread may stuck in busy-wait constantly trying to call CAS and failing
+* coding is much more difficult than locking
