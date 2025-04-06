@@ -38,3 +38,4 @@ There are 2 types of queue interface:
 * [SimpleBlockingQueue](/src/main/java/com/java/concurrentqueue/queue/SimpleBlockingQueue.java) - blocking queue interface, it's similar to standard queue, but has different names for adding/reading elements, to signify that those are blocking operations:
   * put - add new element, similar to `offer`, but offer returns immediately, where put would wait until messages is inserted into queue
   * take - read element from the beginning of the queue, similar to `poll`, but it would wait if queue is empty.
+Usually for compatibility your `BlockingQueue` should extend `Queue` to make sure that all operations are supported. For the sake of simplicity we would extend it, but won't implement `Queue` methods in BlockingQueue implementations.
