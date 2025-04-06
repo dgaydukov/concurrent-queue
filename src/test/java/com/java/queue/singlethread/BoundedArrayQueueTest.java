@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-public class SingleThreadQueueTest {
+public class BoundedArrayQueueTest {
 
     public static Stream<Queue<String>> getQueues() {
         return Stream.of(new BoundedArrayQueue<>(10), new BoundedArrayQueue2<>(10));

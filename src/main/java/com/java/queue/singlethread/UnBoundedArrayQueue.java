@@ -36,7 +36,7 @@ public class UnBoundedArrayQueue<T> implements Queue<T> {
         }
         size++;
         buffer[tail++] = t;
-        if (tail == capacity - 1){
+        if (tail == capacity){
             tail = 0;
         }
         return true;
@@ -49,7 +49,7 @@ public class UnBoundedArrayQueue<T> implements Queue<T> {
         }
         size--;
         T element = (T) buffer[head++];
-        if (head == capacity - 1){
+        if (head == capacity){
             head = 0;
         }
         return element;
