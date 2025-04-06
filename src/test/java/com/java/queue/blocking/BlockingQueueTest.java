@@ -66,6 +66,6 @@ public class BlockingQueueTest {
         service.execute(putAndTake);
 
         service.shutdown();
-        service.awaitTermination(10, TimeUnit.SECONDS);
+        service.awaitTermination(30, TimeUnit.SECONDS);
     }
 }
