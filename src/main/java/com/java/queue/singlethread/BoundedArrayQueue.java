@@ -9,10 +9,6 @@ public class BoundedArrayQueue<T> implements Queue<T> {
     private int size;
     private int capacity;
 
-    public BoundedArrayQueue(){
-        this(1000);
-    }
-
     public BoundedArrayQueue(int capacity){
         this.capacity = capacity;
         buffer = new Object[capacity];

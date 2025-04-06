@@ -12,10 +12,6 @@ public class UnBoundedArrayQueue<T> implements Queue<T> {
     private int capacity;
     private final int growSize;
 
-    public UnBoundedArrayQueue(){
-        this(1000, 500);
-    }
-
     public UnBoundedArrayQueue(int initialCapacity, int growSize){
         capacity = initialCapacity;
         this.growSize = growSize;

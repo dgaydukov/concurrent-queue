@@ -8,10 +8,6 @@ public class BoundedArrayQueue2<T> implements Queue<T> {
     private long tail;
     private int capacity;
 
-    public BoundedArrayQueue2(){
-        this(1000);
-    }
-
     public BoundedArrayQueue2(int capacity){
         this.capacity = capacity;
         buffer = new Object[capacity];

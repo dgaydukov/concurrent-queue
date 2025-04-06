@@ -6,11 +6,11 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BoundedArrayBlockingQueue<T> implements BlockingQueue<T> {
+    private final int capacity;
+    private final Object[] buffer;
     private final ReentrantLock lock;
     private final Condition full;
     private final Condition empty;
-    private final int capacity;
-    private final Object[] buffer;
 
     private int head;
     private int tail;
@@ -18,10 +18,10 @@ public class BoundedArrayBlockingQueue<T> implements BlockingQueue<T> {
 
     public BoundedArrayBlockingQueue(int capacity){
         this.capacity = capacity;
+        buffer = new Object[capacity];
         lock = new ReentrantLock();
         full = lock.newCondition();
         empty = lock.newCondition();
-        buffer = new Object[capacity];
     }
 
     @Override
