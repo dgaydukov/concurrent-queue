@@ -30,7 +30,7 @@ public class BoundedArrayBlockingQueue<T> implements BlockingQueue<T> {
             lock.lock();
             if (size == capacity){
                 // queue is full, wait
-                full.wait();
+                full.await();
             }
             size++;
             empty.signal();
@@ -51,7 +51,7 @@ public class BoundedArrayBlockingQueue<T> implements BlockingQueue<T> {
             lock.lock();
             if (size == 0){
                 // queue is empty, wait
-                empty.wait();
+                empty.await();
             }
             size--;
             full.signal();
