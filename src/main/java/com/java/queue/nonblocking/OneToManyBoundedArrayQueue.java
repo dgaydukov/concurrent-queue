@@ -2,14 +2,15 @@ package com.java.queue.nonblocking;
 
 import com.java.queue.interfaces.Queue;
 
-public class OneToManyBoundedArrayQueue implements Queue {
+public class OneToManyBoundedArrayQueue<T> implements Queue<T> {
+
     @Override
-    public boolean offer(Object o) {
+    public boolean offer(T t) {
         return false;
     }
 
     @Override
-    public Object poll() {
+    public T poll() {
         return null;
     }
 
