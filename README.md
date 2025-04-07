@@ -66,3 +66,5 @@ Downsides:
 * contention exist when multiple producers try to add elements into queue
 * since CAS force retry if value changed, thread may stuck in busy-wait constantly trying to call CAS and failing
 * coding is much more difficult than locking
+There are several implementation here:
+* [OneToOneBoundedArrayQueue](/src/main/java/com/java/queue/nonblocking/OneToOneBoundedArrayQueue.java) - this is naive implementation, but it still works, yet may be slow at times. The problem here, is that `head/tail` are both volatile, and since they changed only by one thread (one thread offering and changes `tail`, another thread polling and changes `head`), they would behave correctly and would be visible to each other. Yet changes made to array may not be immediately visible. That's why for polling, we check that value is not null, and only in this case we increase `head`. So it's correct, but slow. Ideal way if we can change array directly. In java, this can be achieved with either one `Unsafe` or `VarHandle`.
