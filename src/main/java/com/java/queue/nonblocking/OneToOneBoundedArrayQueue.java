@@ -31,6 +31,7 @@ public class OneToOneBoundedArrayQueue<T> implements Queue<T> {
         }
         int index = (int) (head % capacity);
         T t = (T) buffer[index];
+        // only update head, if we got non-null, this would ensure that array item became visible to the thread
         if (t != null){
             head++;
         }

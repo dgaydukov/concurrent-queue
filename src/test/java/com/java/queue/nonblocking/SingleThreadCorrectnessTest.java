@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 /**
  * This test cases designed to test correctness of non-blocking queues for single threaded application
- * we don't test multi-threaded logic here, just is the queue correctly written for single thread environment
+ * we don't test multithreaded logic here, just is the queue correctly written for single thread environment
  */
 public class SingleThreadCorrectnessTest {
 
