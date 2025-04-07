@@ -2,15 +2,33 @@ package com.java.queue.nonblocking;
 
 import com.java.queue.interfaces.Queue;
 
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+
 public class OneToOneBoundedArrayQueue<T> implements Queue<T> {
     private volatile long head;
     private volatile long tail;
     private final int capacity;
     private final Object[] buffer;
 
+    private static final VarHandle HEAD;
+    private static final VarHandle TAIL;
+    private static final VarHandle BUFFER;
+    static {
+        try {
+            MethodHandles.Lookup l = MethodHandles.lookup();
+            HEAD = l.findVarHandle(OneToOneBoundedArrayQueue.class, "head", long.class);
+            TAIL = l.findVarHandle(OneToOneBoundedArrayQueue.class, "tail",  long.class);
+            BUFFER = MethodHandles.arrayElementVarHandle(Object[].class);
+        } catch (ReflectiveOperationException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
     public OneToOneBoundedArrayQueue(int capacity){
         this.capacity = capacity;
         buffer = new Object[capacity];
+
     }
 
     @Override
@@ -19,8 +37,8 @@ public class OneToOneBoundedArrayQueue<T> implements Queue<T> {
             return false;
         }
         int index = (int) (tail % capacity);
-        buffer[index] = t;
-        tail++;
+        BUFFER.setRelease(buffer, index, t);
+        TAIL.setRelease(this, tail+1);
         return true;
     }
 
@@ -30,14 +48,11 @@ public class OneToOneBoundedArrayQueue<T> implements Queue<T> {
             return null;
         }
         int index = (int) (head % capacity);
-        T t = (T) buffer[index];
-        /**
-         * only increase head counter if you get non-null value
-         * For safer concerns change value back to null for this counter to avoid possible double-read problems
-         */
+        T t = (T) BUFFER.get(buffer, index);
+        // only update head, if we got non-null, this would ensure that array item became visible to the thread
         if (t != null){
-            buffer[index] = null;
-            head++;
+            BUFFER.setRelease(buffer, index, null);
+            HEAD.setRelease(this, head+1);
         }
         return t;
     }

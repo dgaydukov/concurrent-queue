@@ -2,7 +2,6 @@ package com.java.queue.nonblocking;
 
 import com.java.queue.TestHelper;
 import com.java.queue.interfaces.Queue;
-import com.java.queue.singlethread.BoundedArrayQueue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-public class OneToOneBoundedArrayQueueTest {
+public class OneToOneBoundedArrayQueueSimpleTest {
 
     /**
      * You can check the veracity of this test by substitute queue by single threaded
@@ -19,7 +18,7 @@ public class OneToOneBoundedArrayQueueTest {
      */
     @Test
     public void testOfferAndPoll1000Times(){
-        Queue<String> queue = new OneToOneBoundedArrayQueue<>(10);
+        Queue<String> queue = new OneToOneBoundedArrayQueueSimple<>(10);
         for (int i = 0; i < 1_000; i++){
             testOfferAndPoll(queue);
         }

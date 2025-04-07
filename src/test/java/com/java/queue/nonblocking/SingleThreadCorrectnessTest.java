@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class SingleThreadCorrectnessTest {
 
     public static Stream<Queue<String>> getQueues() {
-        return Stream.of(new OneToOneBoundedArrayQueue<>(10));
+        return Stream.of(new OneToOneBoundedArrayQueueSimple<>(10));
     }
 
     @ParameterizedTest
