@@ -27,7 +27,7 @@ public class UnBoundedArrayQueue<T> implements Queue<T> {
 
     @Override
     public boolean offer(T t) {
-        if (size == capacity){
+        if (size == capacity-1){
             grow();
         }
         size++;

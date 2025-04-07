@@ -25,13 +25,14 @@ public class UnboundedArrayQueueTest {
 
     @Test
     public void testPoll(){
+        int n = 100;
         Assertions.assertEquals(0, queue.getSize(), "size should be 0");
         Assertions.assertNull(queue.poll(), "queue should be empty");
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < n; i++){
             Assertions.assertTrue(queue.offer("msg_"+i));
         }
-        Assertions.assertEquals(10, queue.getSize(), "size should be 10");
-        for (int i = 0; i < 10; i++){
+        Assertions.assertEquals(n, queue.getSize(), "size should be "+n);
+        for (int i = 0; i < n; i++){
             Assertions.assertEquals("msg_"+i, queue.poll(), "poll mismatch");
         }
         Assertions.assertEquals(0, queue.getSize(), "size should be 0");
