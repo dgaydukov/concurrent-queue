@@ -1,29 +1,13 @@
 package com.java.queue.list;
 
-public class LinkedList<T> implements List<T> {
-    static class Holder<T>{
-        private final T value;
-        public Holder(T t){
-            value = t;
-        }
-        public T getValue(){
-            return value;
-        }
-        public Holder<T> next;
-    }
-
-    @Override
-    public void add(T t) {
-
-    }
-
-    @Override
-    public T get(int index) {
-        return null;
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
+/**
+ * Basic List interface designed to be used with linked list as underlying data structures
+ * All operations are supposed to run with O(1) complexity
+ * We don't use get(int index), remove(int index) - cause such operation would require traversal of whole list and perform with O(n)
+ */
+public interface LinkedList<T> {
+    void add(T t);
+    T next();
+    void remove();
+    int size();
 }
