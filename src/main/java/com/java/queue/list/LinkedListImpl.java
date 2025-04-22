@@ -12,7 +12,6 @@ public class LinkedListImpl implements LinkedList<Person> {
         }
     }
     private int size;
-    private int index;
     // read first
     private Person first;
     // append to last
@@ -21,18 +20,39 @@ public class LinkedListImpl implements LinkedList<Person> {
     private Person current;
 
 
+    /**
+     * Adding takes O(n)
+     */
     @Override
     public void add(Person person) {
         size++;
+        if (first == null){
+            first = person;
+        } else if (first.next == null){
+            first.next = person;
+        } else {
+            Person p = first.next;
+            while (p.next != null){
+                p = p.next;
+            }
+            p.next = person;
+        }
     }
 
     @Override
     public Person next() {
-        return null;
+        if (current == null){
+            current = first;
+        }
+        Person p = current;
+        current = current.next;
+        return p;
     }
 
     @Override
     public void remove() {
+        // we should remove current and reset link
+        current.prev = current.next;
         size--;
     }
 

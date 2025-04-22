@@ -1,8 +1,5 @@
 package com.java.queue.list;
 
-import lombok.Data;
-
-@Data
 public class Person {
     private String name;
     private int age;
@@ -16,4 +13,9 @@ public class Person {
     // this is terrible for low-latency and GC, so to write zero-GC we should have this field in the object itself
     public Person next;
     public Person prev;
+
+    @Override
+    public String toString(){
+        return "Person[name="+name+", age="+age+"]";
+    }
 }
