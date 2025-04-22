@@ -15,26 +15,25 @@ public class LinkedListPerson implements LinkedList<Person> {
     public void add(Person person) {
         if (size == 0){
             first = person;
+            current = first;
         }
         size++;
-        if (last == null){
-            last = person;
-        } else {
+        if (last != null) {
             Person prev = last.prev;
-            if (prev == null){
+            if (prev == null) {
                 last.prev = last;
                 last.prev.next = person;
             } else {
                 prev.next = last;
             }
-            last = person;
         }
+        last = person;
     }
 
     @Override
     public Person next() {
         if (current == null){
-            current = first;
+            return null;
         }
         Person p = current;
         current = current.next;

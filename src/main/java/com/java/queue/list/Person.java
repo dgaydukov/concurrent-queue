@@ -1,7 +1,11 @@
 package com.java.queue.list;
 
+import lombok.Getter;
+
 public class Person {
+    @Getter
     private String name;
+    @Getter
     private int age;
 
     public Person(String name, int age){
