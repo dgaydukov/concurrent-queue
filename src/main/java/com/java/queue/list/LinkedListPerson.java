@@ -1,23 +1,11 @@
 package com.java.queue.list;
 
-public class LinkedListImpl implements LinkedList<Person> {
-
-    public static void main(String[] args) {
-        LinkedListImpl ll = new LinkedListImpl();
-        for (int i = 0; i < 10; i++){
-            ll.add(new Person("person_"+i, i*10));
-        }
-        for (int i = 0; i < 10; i++){
-            System.out.println(ll.next());
-        }
-    }
+public class LinkedListPerson implements LinkedList<Person> {
     private int size;
-    // read first
+
     private Person first;
-    // append to last
-    private Person last;
-    // for iteration for next. reset would put current=first
     private Person current;
+    private Person read;
 
 
     /**
@@ -25,6 +13,25 @@ public class LinkedListImpl implements LinkedList<Person> {
      */
     @Override
     public void add(Person person) {
+        if (size == 0){
+            first = person;
+        }
+        size++;
+        if (current == null){
+            current = person;
+        } else {
+            Person prev = current.prev;
+            if (prev == null){
+                current.prev = current;
+                current.prev.next = person;
+            } else {
+                prev.next = current;
+            }
+            current = person;
+        }
+    }
+
+    public void addToFirst(Person person) {
         size++;
         if (first == null){
             first = person;
@@ -41,18 +48,18 @@ public class LinkedListImpl implements LinkedList<Person> {
 
     @Override
     public Person next() {
-        if (current == null){
-            current = first;
+        if (read == null){
+            read = first;
         }
-        Person p = current;
-        current = current.next;
+        Person p = read;
+        read = read.next;
         return p;
     }
 
     @Override
     public void remove() {
         // we should remove current and reset link
-        current.prev = current.next;
+        read.prev = read.next;
         size--;
     }
 
