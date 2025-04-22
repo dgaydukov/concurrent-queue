@@ -4,8 +4,8 @@ public class LinkedListPerson implements LinkedList<Person> {
     private int size;
 
     private Person first;
+    private Person last;
     private Person current;
-    private Person read;
 
 
     /**
@@ -17,54 +17,48 @@ public class LinkedListPerson implements LinkedList<Person> {
             first = person;
         }
         size++;
-        if (current == null){
-            current = person;
+        if (last == null){
+            last = person;
         } else {
-            Person prev = current.prev;
+            Person prev = last.prev;
             if (prev == null){
-                current.prev = current;
-                current.prev.next = person;
+                last.prev = last;
+                last.prev.next = person;
             } else {
-                prev.next = current;
+                prev.next = last;
             }
-            current = person;
-        }
-    }
-
-    public void addToFirst(Person person) {
-        size++;
-        if (first == null){
-            first = person;
-        } else if (first.next == null){
-            first.next = person;
-        } else {
-            Person p = first.next;
-            while (p.next != null){
-                p = p.next;
-            }
-            p.next = person;
+            last = person;
         }
     }
 
     @Override
     public Person next() {
-        if (read == null){
-            read = first;
+        if (current == null){
+            current = first;
         }
-        Person p = read;
-        read = read.next;
+        Person p = current;
+        current = current.next;
         return p;
     }
 
     @Override
     public void remove() {
-        // we should remove current and reset link
-        read.prev = read.next;
-        size--;
+        if (size > 0){
+            current.prev = current.next;
+            size--;
+            if (size == 0){
+                first = null;
+            }
+        }
     }
 
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public void resetIterator() {
+        current = first;
     }
 }

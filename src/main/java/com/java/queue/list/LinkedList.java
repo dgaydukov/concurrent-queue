@@ -10,4 +10,5 @@ public interface LinkedList<T> {
     T next();
     void remove();
     int size();
+    void resetIterator();
 }
