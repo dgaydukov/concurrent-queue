@@ -31,7 +31,7 @@ public class ArrayPriorityQueue<T> implements PriorityQueue<T> {
     @Override
     public T poll() {
         if (size > 0){
-            
+
         }
         return null;
     }
