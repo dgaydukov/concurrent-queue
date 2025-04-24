@@ -30,24 +30,36 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
     public boolean offer(T t) {
         if (size == capacity){
             grow();
+            tail = size;
         }
-        size++;
-        // go through array and compare with each element
-        for (int i = head; i < tail; i++){
-            int compare = t.compareTo((T)buffer[i]);
-            if (compare < 1){
-                // move right on one position all elements
-                for (int j = tail + 1; j == i; j--){
-                    buffer[j] = buffer[j-1];
+        if (size == 0){
+            buffer[tail] = t;
+        } else {
+            // go through array and compare with each element
+            boolean inserted = false;
+            for (int i = head; i < tail; i++){
+                int compare = t.compareTo((T)buffer[i]);
+                if (compare < 1){
+                    inserted = true;
+                    // move right on one position all elements
+                    for (int j = tail; j > i; j--){
+                        buffer[j] = buffer[j-1];
+                    }
+                    buffer[i] = t;
+                    break;
                 }
-                buffer[i] = t;
-                break;
+            }
+            // if we loop over, but didn't find less or equal, we just add element on top
+            if (!inserted){
+                buffer[tail] = t;
             }
         }
+        tail++;
 
         if (tail == capacity){
             tail = 0;
         }
+        size++;
         return true;
     }
 
