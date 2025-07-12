@@ -2,7 +2,7 @@
 
 ### Content
 * [Description](#description)
-* [2 concurrent models](#2-concurrent-models)
+* [2 main concurrent models](#2-main-concurrent-models)
 * [Queue interfaces](#queue-interfaces)
 * [Single thread queue implementation](#single-thread-queue-implementation)
 * [Blocking queue implementation](#blocking-queue-implementation)
@@ -15,7 +15,7 @@ The goal of the project is to show different approaches to write concurrent code
 * single writer, multiple readers
 * multiple writers, multiple readers
 
-### 2 concurrent models
+### 2 main concurrent models
 There are 2 main concurrent models in java: blocking and non-blocking. They differ in their implementation, and use different approaches. But both working well. Let's take a close look.
 Blocking concurrency:
 * we use locks explicitly (keyword `synchonized` use lock implicitly under-the-hood)
